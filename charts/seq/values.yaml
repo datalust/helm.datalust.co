@@ -43,12 +43,23 @@ ingestion:
 gelf:
   enabled: false
   image:
-    repository: datalust/sqelf
+    repository: datalust/seq-input-gelf
     pullPolicy: IfNotPresent
   service:
     port: 12201
     # GELF can be ingested through either TCP or UDP
     protocol: TCP
+
+# Accept events in the Syslog format and forward them to Seq.
+syslog:
+  enabled: false
+  image:
+    repository: datalust/seq-input-syslog
+    pullPolicy: IfNotPresent
+  service:
+    port: 514
+    # Only UDP is currently supported for ingesting Syslog
+    protocol: UDP
 
 service:
   type: ClusterIP

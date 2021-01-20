@@ -106,6 +106,29 @@ spec:
               add:
                 - NET_BIND_SERVICE
 {{- end }}
+{{- if .Values.syslog.enabled }}
+        - name: {{ .Chart.Name }}-syslog
+          image: "{{ .Values.syslog.image.repository }}:{{- default "latest" .Values.syslog.image.tag }}"
+          imagePullPolicy: {{ .Values.syslog.image.pullPolicy }}
+          env:
+            - name: "SEQ_ADDRESS"
+              value: "http://{{ template "seq.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.ingestion.service.port }}"
+            - name: "SEQ_API_KEY"
+              value: "{{ .Values.syslog.apiKey }}"
+            - name: "SYSLOG_ADDRESS"
+              value: "{{ .Values.syslog.service.protocol | lower }}://0.0.0.0:514"
+            - name: "SYSLOG_ENABLE_DIAGNOSTICS"
+              value: "True"
+          ports:
+            - name: syslog
+              containerPort: 514
+              protocol: {{ .Values.syslog.service.protocol }}
+          securityContext:
+            runAsUser: 0
+            capabilities:
+              add:
+                - NET_BIND_SERVICE
+{{- end }}
 {{- with .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml . | indent 8 }}

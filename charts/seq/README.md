@@ -64,11 +64,18 @@ The following table lists the configurable parameters of the Seq chart and their
 | `ingestion.ingress.hosts`            | Ingress accepted hostnames                                                                            | `[]`                                  |
 | `gelf.enabled`                       | Enable log ingestion using the GELF protocol                                                          | `false`                               |
 | `gelf.apiKey`                        | The API key to use when forwarding events into Seq                                                    |                                       |
-| `gelf.image.repository`              | Image repository                                                                                      | `datalust/sqelf`                      |
-| `gelf.image.tag`                     | Sqelf image tag                                                                                       | `2`                                   |
+| `gelf.image.repository`              | Image repository                                                                                      | `datalust/seq-input-gelf`                      |
+| `gelf.image.tag`                     | Seq Input GELF image tag                                                                                       | `2`                                   |
 | `gelf.image.pullPolicy`              | Image pull policy                                                                                     | `IfNotPresent`                        |
 | `gelf.service.port`                  | The port to listen for GELF events on                                                                 | `12201`                               |
 | `gelf.service.protocol`              | The protocol to listen for GELF events on. Can be either `UDP` or `TCP`.                              | `TCP`                                 |
+| `syslog.enabled`                       | Enable log ingestion using the SYSLOG protocol                                                          | `false`                               |
+| `syslog.apiKey`                        | The API key to use when forwarding events into Seq                                                    |                                       |
+| `syslog.image.repository`              | Image repository                                                                                      | `datalust/seq-input-syslog`                      |
+| `syslog.image.tag`                     | Seq Input Syslog image tag                                                                                       | `1`                                   |
+| `syslog.image.pullPolicy`              | Image pull policy                                                                                     | `IfNotPresent`                        |
+| `syslog.service.port`                  | The port to listen for Syslog events on                                                                 | `514`                               |
+| `syslog.service.protocol`              | The protocol to listen for Syslog events on. Only `UDP` is currently supported.                              | `UDP`                                 |
 | `persistence.enabled`                | Use persistent volume to store data                                                                   | `true`                                |
 | `persistence.size`                   | Size of persistent volume claim                                                                       | `8Gi`                                 |
 | `persistence.existingClaim`          | Use an existing PVC to persist data                                                                   | `nil`                                 |
