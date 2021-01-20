@@ -24,6 +24,12 @@ spec:
       protocol: {{ .Values.gelf.service.protocol }}
       name: gelf
 {{- end }}
+{{- if .Values.syslog.enabled }}
+    - port: {{ .Values.syslog.service.port }}
+      targetPort: syslog
+      protocol: {{ .Values.syslog.service.protocol }}
+      name: syslog
+{{- end }}
   selector:
     app: {{ template "seq.name" . }}
     release: {{ .Release.Name }}
