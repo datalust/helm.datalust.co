@@ -1,9 +1,9 @@
 {{- if or .Values.ui.ingress.enabled .Values.ingestion.ingress.enabled }}
-{{- $serviceName := include "seq.fullname" . -}}
-apiVersion: {{ template "ingress.apiVersion" . }}
+{{- $name := include "seq.fullname" . -}}
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ $serviceName }}
+  name: {{ $name }}
   labels:
     app: {{ template "seq.name" . }}
     chart: {{ template "seq.chart" . }}
@@ -36,9 +36,12 @@ spec:
       http:
         paths:
           - path: {{ $uiPath }}
+            pathType: Prefix
             backend:
-              serviceName: {{ $serviceName }}
-              servicePort: {{ $uiPort }}
+              service:
+                name: {{ $name }}
+                port:
+                  number: {{ $uiPort }}
   {{- end }}
   {{- end }}
   {{ if .Values.ingestion.ingress.enabled }}
@@ -49,9 +52,12 @@ spec:
       http:
         paths:
           - path: {{ $ingestionPath }}
+            pathType: Prefix
             backend:
-              serviceName: {{ $serviceName }}
-              servicePort: {{ $ingestionPort }}
+              service:
+                name: {{ $name }}
+                port:
+                  number: {{ $ingestionPort }}
   {{- end }}
   {{- end }}
 {{- end }}
