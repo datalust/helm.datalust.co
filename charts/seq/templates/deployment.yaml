@@ -33,6 +33,14 @@ spec:
 {{- end }}
             - name: "SEQ_CACHE_SYSTEMRAMTARGET"
               value: "{{ .Values.cache.targetSize }}"
+{{- if .Values.firstRunAdminUsername }}
+            - name: "SEQ_FIRSTRUN_ADMINUSERNAME"
+              value: "{{ .Values.firstRunAdminUsername }}"
+{{- end }}
+{{- if .Values.firstRunAdminPasswordHash }}
+            - name: "SEQ_FIRSTRUN_ADMINPASSWORDHASH"
+              value: "{{ .Values.firstRunAdminPasswordHash }}"
+{{- end }}
           ports:
             - name: ingestion
               containerPort: 5341
