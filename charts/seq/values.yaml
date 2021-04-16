@@ -19,6 +19,11 @@ acceptEULA: "Y"
 #   AADSTS50011: The reply url specified in the request does not match the reply urls configured for the application
 # baseURI: https://my.public.url/
 
+# Set this to create an admin user with given password hash at first run.
+# See here for docs on how to create the password hash: https://blog.datalust.co/setting-an-initial-password-when-deploying-seq-to-docker/
+# firstRunAdminUsername: "admin"
+# firstRunAdminPasswordHash: ""
+
 # The complete Seq API and UI.
 # This API can accept events and serve API requests.
 ui:
