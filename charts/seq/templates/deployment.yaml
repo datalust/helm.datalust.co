@@ -137,18 +137,22 @@ spec:
               add:
                 - NET_BIND_SERVICE
 {{- end }}
+{{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+{{ toYaml . | indent 8 }}
+{{- end }}
 {{- with .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml . | indent 8 }}
-    {{- end }}
-    {{- with .Values.affinity }}
+{{- end }}
+{{- with .Values.affinity }}
       affinity:
 {{ toYaml . | indent 8 }}
-    {{- end }}
-    {{- with .Values.tolerations }}
+{{- end }}
+{{- with .Values.tolerations }}
       tolerations:
 {{ toYaml . | indent 8 }}
-    {{- end }}
+{{- end }}
       serviceAccountName: "{{ template "seq.serviceAccountName" . }}"
       volumes:
       - name: seq-data
