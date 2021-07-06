@@ -10,9 +10,9 @@ keywords:
 home: https://datalust.co/seq
 icon: https://avatars1.githubusercontent.com/u/5898109?s=200&v=4
 sources:
-- https://github.com/datalust/seq-tickets
+- https://github.com/datalust/helm.datalust.co
 maintainers:
 - name: nblumhardt
-  email: nblumhardt@nblumhardt.com
+  email: nblumhardt@datalust.co
 - name: KodrAus
-  email: ashleymannix@live.com.au
+  email: amannix@datalust.co
