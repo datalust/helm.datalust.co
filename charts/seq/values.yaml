@@ -89,8 +89,8 @@ cache:
   # The fraction of RAM that the cache should try fit within. Specifying a larger
   # value may allow more events in RAM at the expense of potential instability.
   # Setting it to `0` will disable the cache completely.
-  # 70% (`0.7`) is a good starting point for machines with up to ~8GB of RAM.
-  targetSize: 0.7
+  # 60% (`0.6`) is a good starting point for machines with up to ~8GB of RAM.
+  targetSize: 0.6
 
 nodeSelector: {}
 
@@ -134,14 +134,7 @@ serviceAccount:
 ## Enable RBAC
 rbac:
   create: false
-
-# If true, create & use Pod Security Policy resources
-# https://kubernetes.io/docs/concepts/policy/pod-security-policy/
-podSecurityPolicy:
-  create: false
-
-securityContext:
-  privileged: true
+  rules: []
 
 ## Configure probe values
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
