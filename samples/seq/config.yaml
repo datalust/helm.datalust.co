@@ -1,0 +1,25 @@
+resources:
+  limits:
+    memory: "1Gi"
+
+ingress:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/proxy-buffering: "on"
+    nginx.ingress.kubernetes.io/proxy-buffer-size: "128k"
+    nginx.ingress.kubernetes.io/proxy-buffers-number: "4"
+
+ui:
+  ingress:
+    enabled: true
+    path: /
+    hosts:
+      - seq-dev.local
+ingestion:
+  ingress:
+    enabled: true
+    path: /
+    hosts:
+      - seq-dev-ingest.local
+gelf:
+  enabled: true
