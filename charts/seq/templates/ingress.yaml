@@ -44,7 +44,7 @@ spec:
                   number: {{ $uiPort }}
 {{- end }}
 {{- end }}
-{{ if .Values.ingestion.ingress.enabled }}
+{{- if .Values.ingestion.ingress.enabled }}
 {{- $ingestionPath := .Values.ingestion.ingress.path -}}
 {{- $ingestionPort := .Values.ingestion.service.port -}}
 {{- range .Values.ingestion.ingress.hosts }}
