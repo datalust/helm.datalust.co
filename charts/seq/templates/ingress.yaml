@@ -28,7 +28,7 @@ spec:
 {{- end }}
 {{- end }}
   rules:
-{{ if .Values.ui.ingress.enabled }}
+{{- if .Values.ui.ingress.enabled }}
 {{- $uiPath := .Values.ui.ingress.path -}}
 {{- $uiPort := .Values.ui.service.port -}}
 {{- range .Values.ui.ingress.hosts }}
