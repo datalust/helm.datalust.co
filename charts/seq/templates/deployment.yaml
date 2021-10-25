@@ -95,7 +95,7 @@ spec:
           imagePullPolicy: {{ .Values.gelf.image.pullPolicy }}
           env:
             - name: "SEQ_ADDRESS"
-              value: "http://{{ template "seq.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.ingestion.service.port }}"
+              value: "http://localhost:{{ .Values.ingestion.service.port }}"
             - name: "SEQ_API_KEY"
               value: "{{ .Values.gelf.apiKey }}"
             - name: "GELF_ADDRESS"
