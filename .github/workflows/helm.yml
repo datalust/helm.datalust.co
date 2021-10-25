@@ -27,17 +27,18 @@ jobs:
       - name: List Changed
         id: list-changed
         run: |
+          cd charts/seq
           changed=$(ct list-changed --target-branch main)
           if [[ -n "$changed" ]]; then
             echo "::set-output name=changed::true"
           fi
 
       - name: Lint
-        run: ct lint
+        run: cd charts/seq; ct lint
 
       - name: Create Cluster
         uses: helm/kind-action@v1.2.0
         if: steps.list-changed.outputs.changed == 'true'
 
       - name: Install
-        run: ct install
+        run: cd charts/seq; ct install
