@@ -53,7 +53,7 @@ The following table lists the configurable parameters of the Seq chart and their
 | `service.type`                       | Kubernetes service type                                                                               | `ClusterIP`                           |
 | `ingress.annotations`                | Ingress annotations                                                                                   | `{}`                                  |
 | `ingress.labels`                     | Custom labels                                                                                         | `{}`                                  |
-| `ingress.ingressClassName`      | Ingress controller Class                                                                                   | `nginx`                                  |
+| `ingress.className`      | Ingress controller Class                                                                                   | `nginx`                                  |
 
 | `ingress.tls`                        | Ingress TLS configuration                                                                             | `[]`                                  |
 | `ui.service.port`                    | Kubernetes port where the full API/UI is exposed                                                      | `80`                                  |
