@@ -27,6 +27,9 @@ spec:
       secretName: {{ .secretName }}
 {{- end }}
 {{- end }}
+  {{- if .Values.ingress.className }}
+  ingressClassName: {{ .Values.ingress.className | quote }}
+  {{- end }}
   rules:
 {{- if .Values.ui.ingress.enabled }}
 {{- $uiPath := .Values.ui.ingress.path -}}
