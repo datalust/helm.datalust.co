@@ -54,7 +54,6 @@ The following table lists the configurable parameters of the Seq chart and their
 | `ingress.annotations`                | Ingress annotations                                                                                   | `{}`                                  |
 | `ingress.labels`                     | Custom labels                                                                                         | `{}`                                  |
 | `ingress.className`      | Ingress controller Class                                                                                   | `nginx`                                  |
-
 | `ingress.tls`                        | Ingress TLS configuration                                                                             | `[]`                                  |
 | `ui.service.port`                    | Kubernetes port where the full API/UI is exposed                                                      | `80`                                  |
 | `ui.ingress.enabled`                 | Enable ingress on the full API/UI                                                                     | `false`                               |
