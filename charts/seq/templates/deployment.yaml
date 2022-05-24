@@ -41,6 +41,10 @@ spec:
             - name: "SEQ_FIRSTRUN_ADMINPASSWORDHASH"
               value: "{{ .Values.firstRunAdminPasswordHash }}"
 {{- end }}
+{{- if .Values.firstRunRequireAuthenticationForHttpIngestion }}
+            - name: "SEQ_FIRSTRUN_REQUIREAUTHENTICATIONFORHTTPINGESTION"
+              value: "{{ .Values.firstRunRequireAuthenticationForHttpIngestion }}"
+{{- end }}
           ports:
             - name: ingestion
               containerPort: 5341
