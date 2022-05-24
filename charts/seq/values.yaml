@@ -23,7 +23,7 @@ acceptEULA: "Y"
 # See here for docs on how to create the password hash: https://blog.datalust.co/setting-an-initial-password-when-deploying-seq-to-docker/
 # firstRunAdminUsername: "admin"
 # firstRunAdminPasswordHash: ""
-# firstRunRequireAuthenticationForHttpIngestion: false
+# firstRunRequireAuthenticationForHttpIngestion: true
 
 # The complete Seq API and UI.
 # This API can accept events and serve API requests.
