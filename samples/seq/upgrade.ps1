@@ -1,5 +1,10 @@
 Push-Location $PSScriptRoot
 
-helm upgrade -f config.yaml seq-dev stable/seq
+$chart = $env:SEQ_HELM_CHART_OR_PATH
+if ($null -eq $chart) {
+    $chart = "datalust/seq"
+}
+
+helm upgrade -f config.yaml seq-dev $chart
 
 Pop-Location

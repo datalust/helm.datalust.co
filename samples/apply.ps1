@@ -1,24 +1,40 @@
 Push-Location $PSScriptRoot
 
+Write-Host "Updating Helm repository"
+Write-Host "------------------------"
 helm repo add datalust https://helm.datalust.co
+Write-Host
 
-# Create the dashboard for exploring our cluster
+Write-Host "Installing Kubernetes Dashboard"
+Write-Host "-------------------------------"
 ./dashboard/apply.ps1
+Write-Host
 
-# Create the ingress controller for exposing our Seq instance
+Write-Host "Installing NGINX Ingress Controller"
+Write-Host "-----------------------------------"
 ./nginx-controller/apply.ps1
+Write-Host
 
-# Create the Seq pod for storing and searching logs
+Write-Host "Installing Seq"
+Write-Host "--------------"
 ./seq/apply.ps1
+Write-Host
 
-# Create the fluent-bit daemon for collecting container logs
+
+Write-Host "Installing FluentBit Daemon Set"
+Write-Host "-------------------------------"
 ./fluent-bit/apply.ps1
+Write-Host
 
-# Create a test application that produces some logs
+Write-Host "Installing a sample app"
+Write-Host "-----------------------"
 ./app/apply.ps1
+Write-Host
 
-Write-Warning "Add `127.0.0.1 seq-dev.local` to your `hosts` file"
-
-Start-Process "http://seq-dev.local"
+Write-Host "Ready to go!"
+Write-Host "------------"
+Write-Warning "Add `seq-dev.local` to your hosts file to access Seq"
+Write-Host "Run: `./dashboard/serve.ps1` to access the Kubernetes dashboard"
+Write-Host "Run: `./seq/serve.ps1` to access Seq"
 
 Pop-Location
