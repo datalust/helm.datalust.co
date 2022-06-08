@@ -5,8 +5,9 @@ if ($null -eq $chart) {
     $chart = "datalust/seq"
 }
 
-helm uninstall seq-dev
 helm repo update
-helm install -f config.yaml seq-dev $chart
+helm upgrade --install -f config.yaml seq-dev $chart
+
+kubectl wait --for=condition=ready pod --selector=release=seq-dev --timeout=120s
 
 Pop-Location
