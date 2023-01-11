@@ -22,15 +22,26 @@ acceptEULA: "Y"
 #   AADSTS50011: The reply url specified in the request does not match the reply urls configured for the application
 # baseURI: https://my.public.url/
 
+# Set the addresses that the server will listen on. The first entry listed
+# will be used as the default when generating URIs for apps and notifications.
+# listenURI: "http://localhost:80,http://localhost:5341"
+
 # Set this to create an admin user with given password hash at first run.
 # See here for docs on how to create the password hash: https://blog.datalust.co/setting-an-initial-password-when-deploying-seq-to-docker/
 # firstRunAdminUsername: "admin"
 # firstRunAdminPasswordHash: ""
 # firstRunRequireAuthenticationForHttpIngestion: true
 
+securityContext:
+  runAsUser: 0
+  capabilities:
+    add:
+      - NET_BIND_SERVICE
+
 # The complete Seq API and UI.
 # This API can accept events and serve API requests.
 ui:
+  containerPort: 80
   service:
     port: 80
   ingress:
@@ -41,6 +52,7 @@ ui:
 # The ingestion-only API.
 # This API is a subset of ui that can only ingest events.
 ingestion:
+  containerPort: 5341
   service:
     port: 5341
   ingress:
@@ -54,6 +66,11 @@ gelf:
   image:
     repository: datalust/seq-input-gelf
     pullPolicy: IfNotPresent
+  securityContext:
+    runAsUser: 0
+    capabilities:
+      add:
+        - NET_BIND_SERVICE
   service:
     port: 12201
     # GELF can be ingested through either TCP or UDP
@@ -65,6 +82,11 @@ syslog:
   image:
     repository: datalust/seq-input-syslog
     pullPolicy: IfNotPresent
+  securityContext:
+    runAsUser: 0
+    capabilities:
+      add:
+        - NET_BIND_SERVICE
   service:
     port: 514
     # Only UDP is currently supported for ingesting Syslog

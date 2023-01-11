@@ -31,6 +31,10 @@ spec:
             - name: "BASE_URI"
               value: "{{ .Values.baseURI }}"
 {{- end }}
+{{- if .Values.listenURI }}
+            - name: SEQ_API_LISTENURIS
+              value: "{{ .Values.listenURI }}"
+{{- end }}
             - name: "SEQ_CACHE_SYSTEMRAMTARGET"
               value: "{{ .Values.cache.targetSize }}"
 {{- if .Values.firstRunAdminUsername }}
@@ -47,16 +51,13 @@ spec:
 {{- end }}
           ports:
             - name: ingestion
-              containerPort: 5341
+              containerPort: {{ .Values.ingestion.containerPort }}
               protocol: TCP
             - name: ui
-              containerPort: 80
+              containerPort: {{ .Values.ui.containerPort }}
               protocol: TCP
           securityContext:
-            runAsUser: 0
-            capabilities:
-              add:
-                - NET_BIND_SERVICE
+{{ toYaml .Values.securityContext | indent 12 }}
 {{- if .Values.livenessProbe.enabled }}
           livenessProbe:
             httpGet:
@@ -111,10 +112,7 @@ spec:
               containerPort: 12201
               protocol: {{ .Values.gelf.service.protocol }}
           securityContext:
-            runAsUser: 0
-            capabilities:
-              add:
-                - NET_BIND_SERVICE
+{{ toYaml .Values.gelf.securityContext | indent 12 }}
 {{- end }}
 {{- if .Values.syslog.enabled }}
         - name: {{ .Chart.Name }}-syslog
@@ -134,10 +132,7 @@ spec:
               containerPort: 514
               protocol: {{ .Values.syslog.service.protocol }}
           securityContext:
-            runAsUser: 0
-            capabilities:
-              add:
-                - NET_BIND_SERVICE
+{{ toYaml .Values.syslog.securityContext | indent 12 }}
 {{- end }}
 {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
