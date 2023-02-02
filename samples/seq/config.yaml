@@ -1,5 +1,5 @@
 image:
-  repository: datalust/seq:latest
+  tag: latest
 
 resources:
   limits:
