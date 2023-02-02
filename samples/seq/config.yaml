@@ -1,3 +1,6 @@
+image:
+  repository: datalust/seq:latest
+
 resources:
   limits:
     memory: "1Gi"
