@@ -4,6 +4,9 @@
 
 image:
   repository: datalust/seq
+  # Specify a tag to pull a specific version of the Seq container
+  # By default the version of the chart will be used as the tag
+  # tag: latest
   pullPolicy: IfNotPresent
 
 # By passing the value Y in the ACCEPT_EULA environment variable,
