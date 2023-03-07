@@ -41,3 +41,11 @@ Create the name of the service account to use - only used when podsecuritypolicy
     {{ default "default" .Values.serviceAccount.name }}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Selector labels
+*/}}
+{{- define "seq.selectorLabels" -}}
+app: {{ template "seq.name" . }}
+release: {{ .Release.Name }}
+{{- end -}}

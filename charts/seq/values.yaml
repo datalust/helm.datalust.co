@@ -105,6 +105,23 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
+## Network Policy configuration
+## ref: https://kubernetes.io/docs/concepts/services-networking/network-policies/
+networkPolicy:
+  enabled: false
+  ingress: 
+  - {}
+  egress: 
+  - {}
+  # Example which allows DNS resolution:
+  # egress:
+  #     # Allow dns resolution
+  # - ports:
+  #   - port: 53
+  #     protocol: UDP
+  #   - port: 53
+  #     protocol: TCP
+
 resources: {}
   # We recommend uncommenting these and specifying an explicit memory limit that
   # suits your workload.
