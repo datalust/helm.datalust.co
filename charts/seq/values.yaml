@@ -109,9 +109,9 @@ ingress:
 ## ref: https://kubernetes.io/docs/concepts/services-networking/network-policies/
 networkPolicy:
   enabled: false
-  ingress: 
+  ingress:
   - {}
-  egress: 
+  egress:
   - {}
   # Example which allows DNS resolution:
   # egress:
