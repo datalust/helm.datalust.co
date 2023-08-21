@@ -12,7 +12,5 @@ icon: https://avatars1.githubusercontent.com/u/5898109?s=200&v=4
 sources:
 - https://github.com/datalust/helm.datalust.co
 maintainers:
-- name: nblumhardt
-  email: nblumhardt@datalust.co
-- name: KodrAus
-  email: amannix@datalust.co
+- name: Datalust
+  email: support@datalust.co
