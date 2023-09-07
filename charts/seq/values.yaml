@@ -128,13 +128,6 @@ resources: {}
   # limits:
   #  memory: 2Gi
 
-cache:
-  # The fraction of RAM that the cache should try fit within. Specifying a larger
-  # value may allow more events in RAM at the expense of potential instability.
-  # Setting it to `0` will disable the cache completely.
-  # 60% (`0.6`) is a good starting point for machines with up to ~8GB of RAM.
-  targetSize: 0.6
-
 nodeSelector: {}
 
 tolerations: []
