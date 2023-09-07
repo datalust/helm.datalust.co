@@ -28,15 +28,13 @@ spec:
             - name: "ACCEPT_EULA"
               value: "{{ .Values.acceptEULA }}"
 {{- if .Values.baseURI }}
-            - name: "BASE_URI"
+            - name: "SEQ_API_CANONICALURI"
               value: "{{ .Values.baseURI }}"
 {{- end }}
 {{- if .Values.listenURI }}
             - name: SEQ_API_LISTENURIS
               value: "{{ .Values.listenURI }}"
 {{- end }}
-            - name: "SEQ_CACHE_SYSTEMRAMTARGET"
-              value: "{{ .Values.cache.targetSize }}"
 {{- if .Values.firstRunAdminUsername }}
             - name: "SEQ_FIRSTRUN_ADMINUSERNAME"
               value: "{{ .Values.firstRunAdminUsername }}"
