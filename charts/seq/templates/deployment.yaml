@@ -48,7 +48,7 @@ spec:
               value: "{{ .Values.firstRunRequireAuthenticationForHttpIngestion }}"
 {{- end }}
 {{- if .Values.addiotnalEnv }}
-{{ toYaml .Values.additionalEnv | indent 12 }}
+{{ toYaml .Values.extraEnvs | indent 12 }}
 {{- end }}
           ports:
             - name: ingestion
@@ -93,8 +93,8 @@ spec:
             - name: seq-data
               mountPath: {{ .Values.persistence.path }}
               subPath: {{ .Values.persistence.subPath }}
-{{- if .Values.additionalVolumeMounts }}
-{{ toYaml .Values.additionalVolumeMounts | indent 12 }}
+{{- if .Values.extraVolumeMounts }}
+{{ toYaml .Values.extraVolumeMounts | indent 12 }}
 {{- end }}
           resources:
 {{ toYaml .Values.resources | indent 12 }}
@@ -163,6 +163,6 @@ spec:
 {{- else }}
           emptyDir: {}
 {{- end }}
-{{- if .Values.additionalVolumes }}
-{{ toYaml .Values.additionalVolumes | indent 8 }}
+{{- if .Values.extraVolumes }}
+{{ toYaml .Values.extraVolumes | indent 8 }}
 {{- end }}

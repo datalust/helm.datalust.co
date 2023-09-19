@@ -197,17 +197,17 @@ startupProbe:
 
 # Additional volumes to mount on the Seq container
 # These can be used to mount init scripts and certificates
-additionalVolumes: []
+extraVolumes: []
 # - name: seq-setup-volume
 #   configMap:
 #     name: seq-setup-map
-additionalVolumeMounts: []
+extraVolumeMounts: []
 # - name: seq-setup-volume
 #   mountPath: /extra-stuff
 
 # Additional environment variables to set on the Seq container
 # These can be used to set Seq configuration values that aren't
 # exposed directly through the chart
-additionalEnv: []
+extraEnvs: []
 # - name: MY_ENV_VAR
 #   value: "Some Value"
