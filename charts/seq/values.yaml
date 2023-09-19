@@ -194,3 +194,20 @@ startupProbe:
   enabled: true
   failureThreshold: 30
   periodSeconds: 10
+
+# Additional volumes to mount on the Seq container
+# These can be used to mount init scripts and certificates
+additionalVolumes: []
+# - name: seq-setup-volume
+#   configMap:
+#     name: seq-setup-map
+additionalVolumeMounts: []
+# - name: seq-setup-volume
+#   mountPath: /extra-stuff
+
+# Additional environment variables to set on the Seq container
+# These can be used to set Seq configuration values that aren't
+# exposed directly through the chart
+additionalEnv: []
+# - name: MY_ENV_VAR
+#   value: "Some Value"
