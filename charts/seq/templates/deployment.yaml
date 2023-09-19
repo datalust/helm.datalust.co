@@ -47,6 +47,9 @@ spec:
             - name: "SEQ_FIRSTRUN_REQUIREAUTHENTICATIONFORHTTPINGESTION"
               value: "{{ .Values.firstRunRequireAuthenticationForHttpIngestion }}"
 {{- end }}
+{{- if .Values.addiotnalEnv }}
+{{ toYaml .Values.extraEnvs | indent 12 }}
+{{- end }}
           ports:
             - name: ingestion
               containerPort: {{ .Values.ingestion.containerPort }}
@@ -87,9 +90,12 @@ spec:
             periodSeconds: {{ .Values.startupProbe.periodSeconds }}
 {{- end }}
           volumeMounts:
-          - name: seq-data
-            mountPath: {{ .Values.persistence.path }}
-            subPath: {{ .Values.persistence.subPath }}
+            - name: seq-data
+              mountPath: {{ .Values.persistence.path }}
+              subPath: {{ .Values.persistence.subPath }}
+{{- if .Values.extraVolumeMounts }}
+{{ toYaml .Values.extraVolumeMounts | indent 12 }}
+{{- end }}
           resources:
 {{ toYaml .Values.resources | indent 12 }}
 {{- if .Values.gelf.enabled }}
@@ -150,10 +156,13 @@ spec:
 {{- end }}
       serviceAccountName: "{{ template "seq.serviceAccountName" . }}"
       volumes:
-      - name: seq-data
+        - name: seq-data
 {{- if .Values.persistence.enabled }}
-        persistentVolumeClaim:
-          claimName: {{ .Values.persistence.existingClaim | default (include "seq.fullname" .) }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.existingClaim | default (include "seq.fullname" .) }}
 {{- else }}
-        emptyDir: {}
-{{- end -}}
+          emptyDir: {}
+{{- end }}
+{{- if .Values.extraVolumes }}
+{{ toYaml .Values.extraVolumes | indent 8 }}
+{{- end }}
