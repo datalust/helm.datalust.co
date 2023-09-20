@@ -47,7 +47,7 @@ spec:
             - name: "SEQ_FIRSTRUN_REQUIREAUTHENTICATIONFORHTTPINGESTION"
               value: "{{ .Values.firstRunRequireAuthenticationForHttpIngestion }}"
 {{- end }}
-{{- if .Values.addiotnalEnv }}
+{{- if .Values.extraEnvs }}
 {{ toYaml .Values.extraEnvs | indent 12 }}
 {{- end }}
           ports:
