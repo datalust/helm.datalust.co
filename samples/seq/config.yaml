@@ -24,5 +24,3 @@ ingestion:
     path: /
     hosts:
       - seq-dev-ingest.local
-gelf:
-  enabled: true

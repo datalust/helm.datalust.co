@@ -1,10 +1,5 @@
 Push-Location $PSScriptRoot
 
-Write-Host "Updating Helm repository"
-Write-Host "------------------------"
-helm repo add datalust https://helm.datalust.co
-Write-Host
-
 Write-Host "Installing Kubernetes Dashboard"
 Write-Host "-------------------------------"
 ./dashboard/apply.ps1
