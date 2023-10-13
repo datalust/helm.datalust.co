@@ -2,6 +2,9 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: counter
+  labels: {
+    "log.category": "app"
+  }
 spec:
   containers:
   - name: count
