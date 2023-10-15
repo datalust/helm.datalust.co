@@ -5,7 +5,10 @@ if ($null -eq $chart) {
     $chart = "datalust/seq"
 }
 
+helm repo add datalust https://helm.datalust.co
 helm repo update
+
+helm delete seq-dev
 helm upgrade --install -f config.yaml seq-dev $chart
 
 kubectl wait --for=condition=ready pod --selector=release=seq-dev --timeout=120s

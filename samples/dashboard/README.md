@@ -4,6 +4,8 @@ Here we've got some scripts to set up a dashboard app that can be used to see wh
 
 Run the `apply.ps1` script to deploy the dashboard and a user that can access it.
 
+If you're running in `minikube` then you don't need to use this script. See [the `minikube` docs](https://minikube.sigs.k8s.io/docs/handbook/dashboard/) for details.
+
 ## `kubernetes-dashboard`
 
 From: https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/
