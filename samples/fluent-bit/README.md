@@ -1,11 +1,9 @@
 # Collecting app and system logs
 
-[Fluent Bit](https://fluentbit.io/) is a successor to [`fluentd`](https://www.fluentd.org/). It's a generic data collector, like [Logstash](https://www.elastic.co/logstash/), that is natively in Kubernetes.
+[Fluent Bit](https://fluentbit.io/) is a successor to [`fluentd`](https://www.fluentd.org/). It's a generic data collector, like [Logstash](https://www.elastic.co/logstash/).
 
 Run the `apply.ps1` script to deploy the collector so that logs will start getting forwarded.
 
-## `fluent-bit`
+## Configuring Fluent Bit
 
-We create a [DaemonSet](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/), which ensures an instance of the `fluent-bit` collector runs on every [Node](https://kubernetes.io/docs/concepts/architecture/nodes/) in our cluster. This collector will listen for new logs from application containers and forward them via UDP to Seq in the [Graylog format](https://www.graylog.org/features/gelf).
-
-The configuration for ingesting logs from Kubernetes sources comes from a [ConfigMap](https://kubernetes.io/docs/concepts/configuration/configmap/).
+Fluent Bit is general-purpose ingestion pipeline that supports collecting, filtering, transforming, and emitting event data. This sample just sets up a simple pipeline. For more complex deployments, see [the Fluent Bit docs](https://docs.fluentbit.io/manual). If you're going to deploy Fluent Bit in your production Kubernetes environment then it's worth learning the ins-and-outs of how it works and what it can do.

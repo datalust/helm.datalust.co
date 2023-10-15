@@ -8,6 +8,8 @@ Run the `apply.ps1` script to remove an existing Seq instance and recreate it. R
 
 There's a package manager for Kubernetes called [Helm](https://helm.sh/docs/). Seq has a [Helm Chart](https://helm.sh/docs/topics/charts/) which can be used to simplify deployment of a Seq server in a cluster. Helm will replace default parameters with the ones we specify in our `config.yaml` when creating the deployment.
 
+Helm can simplify deployments, but it doesn't remove the need to understand exactly what you're deploying and how it will integrate with the rest of your environment. Some key features are outlined below, but also explore the source in the `/charts` directory at the root of this repository to learn more about how Seq's Helm chart works.
+
 ### Deployment strategy
 
 The chart uses a [Recreate Deployment Strategy](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#recreate-deployment) to make sure there's only ever a single container going and accessing storage at a time.
@@ -55,11 +57,7 @@ The chart may be deployed with a new or an existing claim.
 
 ### CPU and Memory
 
-Corresponds to the `resources` section of the YAML configuration.
-
-### GELF
-
-The chart doesn't just deploy a `datalust/seq` container. When we enable `gelf` it'll also deploy a `datalust/sqelf` container alongside it, that can forward Graylog events into the Seq container. This is nice because Graylog has ready support in Kubernetes using `fluent-bit`, so applications that aren't using a logging framework with Seq support can simply log to `stdout` and still have their log events collected.
+Corresponds to the `resources` section of the YAML configuration, using the standard [Resources](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/) configuration.
 
 # Accessing Seq
 

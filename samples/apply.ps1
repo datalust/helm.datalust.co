@@ -1,10 +1,5 @@
 Push-Location $PSScriptRoot
 
-Write-Host "Installing Kubernetes Dashboard"
-Write-Host "-------------------------------"
-./dashboard/apply.ps1
-Write-Host
-
 Write-Host "Installing NGINX Ingress Controller"
 Write-Host "-----------------------------------"
 ./nginx-controller/apply.ps1
