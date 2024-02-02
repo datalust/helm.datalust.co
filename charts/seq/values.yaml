@@ -136,6 +136,10 @@ affinity: {}
 
 imagePullSecrets: []
 
+## Priority class name
+## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/
+priorityClassName: ""
+
 ## Enable persistence using Persistent Volume Claims
 ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
 persistence:

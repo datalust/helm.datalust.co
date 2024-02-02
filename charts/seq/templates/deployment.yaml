@@ -154,6 +154,9 @@ spec:
       tolerations:
 {{ toYaml . | indent 8 }}
 {{- end }}
+{{- if .Values.priorityClassName }}
+      priorityClassName: {{ .Values.priorityClassName }}
+{{- end }}
       serviceAccountName: "{{ template "seq.serviceAccountName" . }}"
       volumes:
         - name: seq-data
