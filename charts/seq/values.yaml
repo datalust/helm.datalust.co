@@ -7,7 +7,7 @@ image:
   # Specify a tag to pull a specific version of the Seq container
   # By default the version of the chart will be used as the tag
   # tag: latest
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 # By passing the value Y in the ACCEPT_EULA environment variable,
 # you are expressing that you have read and accepted the terms in
