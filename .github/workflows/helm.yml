@@ -26,10 +26,10 @@ jobs:
         uses: helm/chart-testing-action@v2.7.0
 
       - name: Lint
-        run: ct lint --charts charts/seq --helm-extra-args "--set firstRunNoAuthentication=true"
+        run: ct lint --charts charts/seq --set firstRunNoAuthentication=true
 
       - name: Create Cluster
         uses: helm/kind-action@v1.2.0
 
       - name: Install
-        run: ct install --charts charts/seq --helm-extra-args "--set firstRunNoAuthentication=true"
+        run: ct install --charts charts/seq --set firstRunNoAuthentication=true
