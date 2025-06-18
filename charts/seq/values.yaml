@@ -15,6 +15,16 @@ image:
 # that you intend to use.
 acceptEULA: "Y"
 
+# Seq requires a default admin password in order to initialize a fresh container. Either
+# specify this here, or see the `firstRunAdminPasswordHash` variant below for better confidentiality.
+# firstRunAdminPassword: ""
+
+# Set this to create an admin user with given password hash at first run.
+# See here for docs on how to create the password hash: https://blog.datalust.co/setting-an-initial-password-when-deploying-seq-to-docker/
+# firstRunAdminUsername: "admin"
+# firstRunAdminPasswordHash: ""
+# firstRunRequireAuthenticationForHttpIngestion: true
+
 # Set this URL if you enable ingress and/or AAD authentication.
 # Without this URL set to include HTTPS, Seq will try to set a login redirect
 # URL with HTTP instead of HTTPS and AAD's registration requires HTTPS.
@@ -25,12 +35,6 @@ acceptEULA: "Y"
 # Set the addresses that the server will listen on. The first entry listed
 # will be used as the default when generating URIs for apps and notifications.
 # listenURI: "http://localhost:80,http://localhost:5341"
-
-# Set this to create an admin user with given password hash at first run.
-# See here for docs on how to create the password hash: https://blog.datalust.co/setting-an-initial-password-when-deploying-seq-to-docker/
-# firstRunAdminUsername: "admin"
-# firstRunAdminPasswordHash: ""
-# firstRunRequireAuthenticationForHttpIngestion: true
 
 securityContext:
   runAsUser: 0
