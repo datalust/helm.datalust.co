@@ -32,4 +32,4 @@ jobs:
         uses: helm/kind-action@v1.2.0
 
       - name: Install
-        run: "ct install --charts charts/seq --helm-extra-args '--set firstRunNoAuthentication=true'"
+        run: "ct install --charts charts/seq --helm-extra-set-args '--set firstRunAdminPassword=YourP@55word'"
