@@ -1,8 +1,8 @@
 apiVersion: v1
 name: seq
-version: "2025.1.1"
-appVersion: "2025.1"
-description: Seq is the easiest way for development teams to capture, search and visualize structured log events!
+version: "2025.2.1"
+appVersion: "2025.2"
+description: Seq is the easiest way for development teams to capture, search and visualize structured logs and traces
 keywords:
 - seq
 - structured

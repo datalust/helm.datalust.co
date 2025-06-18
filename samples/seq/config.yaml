@@ -1,3 +1,7 @@
+# This is an insecure default; don't use this for production deployments: instead specify
+# the `firstRunAdminPassword` or `firstRunAdminPasswordHash` options.
+firstRunNoAuthentication: true
+
 image:
   tag: latest
 

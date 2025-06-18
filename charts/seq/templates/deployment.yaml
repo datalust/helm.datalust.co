@@ -39,6 +39,10 @@ spec:
             - name: "SEQ_FIRSTRUN_ADMINUSERNAME"
               value: "{{ .Values.firstRunAdminUsername }}"
 {{- end }}
+{{- if .Values.firstRunAdminPassword }}
+            - name: "SEQ_FIRSTRUN_ADMINPASSWORD"
+              value: "{{ .Values.firstRunAdminPassword }}"
+{{- end }}
 {{- if .Values.firstRunAdminPasswordHash }}
             - name: "SEQ_FIRSTRUN_ADMINPASSWORDHASH"
               value: "{{ .Values.firstRunAdminPasswordHash }}"
@@ -46,6 +50,10 @@ spec:
 {{- if .Values.firstRunRequireAuthenticationForHttpIngestion }}
             - name: "SEQ_FIRSTRUN_REQUIREAUTHENTICATIONFORHTTPINGESTION"
               value: "{{ .Values.firstRunRequireAuthenticationForHttpIngestion }}"
+{{- end }}
+{{- if .Values.firstRunNoAuthentication }}
+            - name: "SEQ_FIRSTRUN_NOAUTHENTICATION"
+              value: "True"
 {{- end }}
 {{- if .Values.extraEnvs }}
 {{ toYaml .Values.extraEnvs | indent 12 }}
@@ -168,4 +176,10 @@ spec:
 {{- end }}
 {{- if .Values.extraVolumes }}
 {{ toYaml .Values.extraVolumes | indent 8 }}
+{{- end }}
+
+# At least one of the default password variables must be set; note that this ignores SEQ_PASSWORD, but
+# that variable is just a convenience alias for SEQ_FIRSTRUN_ADMINPASSWORD anyway.
+{{- if not (or .Values.firstRunNoAuthentication .Values.firstRunAdminPassword .Values.firstRunAdminPasswordHash) }}
+{{- fail "One of firstRunAdminPassword or firstRunAdminPasswordHash must be specified." }}
 {{- end }}
