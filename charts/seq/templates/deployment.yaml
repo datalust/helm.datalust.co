@@ -39,9 +39,18 @@ spec:
             - name: "SEQ_FIRSTRUN_ADMINUSERNAME"
               value: "{{ .Values.firstRunAdminUsername }}"
 {{- end }}
-{{- if .Values.firstRunAdminPassword }}
+{{- if or .Values.firstRunAdminPassword .Values.firstRunAdminPasswordSecret.name }}
             - name: "SEQ_FIRSTRUN_ADMINPASSWORD"
+{{- if or .Values.firstRunAdminPassword
               value: "{{ .Values.firstRunAdminPassword }}"
+{{- else }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.firstRunAdminPasswordSecret.name | quote }}
+{{- if .Values.firstRunAdminPasswordSecret.key }}
+                  key: {{ .Values.firstRunAdminPasswordSecret.key | quote }}
+{{- else }}
+                  key: password
 {{- end }}
 {{- if .Values.firstRunAdminPasswordHash }}
             - name: "SEQ_FIRSTRUN_ADMINPASSWORDHASH"
