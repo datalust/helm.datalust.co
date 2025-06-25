@@ -20,12 +20,22 @@ acceptEULA: "Y"
 # deployment). See the `firstRunAdminPasswordHash` variant below for better confidentiality.
 firstRunNoAuthentication: false
 # firstRunAdminPassword: ""
+#
+# Alternatively, a default admin password can be provided from Kubernetes secret:
+# firstRunAdminPasswordSecret:
+#   name: "seq-admin-password-secret"
+#   key: "password"
 
 # Further customization of the default security settings.
 # See here for docs on how to create a password hash: https://blog.datalust.co/setting-an-initial-password-when-deploying-seq-to-docker/
 # firstRunAdminUsername: "admin"
 # firstRunAdminPasswordHash: ""
 # firstRunRequireAuthenticationForHttpIngestion: true
+#
+# Alternatively, a password hash can be provided from Kubernetes secret:
+# firstRunAdminPasswordHashSecret:
+#   name: "seq-admin-password-hash-secret"
+#   key: "password"
 
 # Set this URL if you enable ingress and/or AAD authentication.
 # Without this URL set to include HTTPS, Seq will try to set a login redirect
