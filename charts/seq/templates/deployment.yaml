@@ -39,18 +39,16 @@ spec:
             - name: "SEQ_FIRSTRUN_ADMINUSERNAME"
               value: "{{ .Values.firstRunAdminUsername }}"
 {{- end }}
-{{- if or .Values.firstRunAdminPassword .Values.firstRunAdminPasswordSecret.name }}
+{{- if or .Values.firstRunAdminPassword .Values.firstRunAdminPasswordSecret }}
             - name: "SEQ_FIRSTRUN_ADMINPASSWORD"
 {{- if .Values.firstRunAdminPassword }}
               value: "{{ .Values.firstRunAdminPassword }}"
 {{- else }}
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.firstRunAdminPasswordSecret.name | quote }}
-{{- if .Values.firstRunAdminPasswordSecret.key }}
-                  key: {{ .Values.firstRunAdminPasswordSecret.key | quote }}
-{{- else }}
-                  key: password
+                  name: {{ required "A valud .Values.firstRunAdminPasswordSecret.name is required" .Values.firstRunAdminPasswordSecret.name | quote }}
+                  key: {{ required "A valud .Values.firstRunAdminPasswordSecret.key is required" .Values.firstRunAdminPasswordSecret.key | quote }}
+{{- end }}
 {{- end }}
 {{- if .Values.firstRunAdminPasswordHash }}
             - name: "SEQ_FIRSTRUN_ADMINPASSWORDHASH"
@@ -189,6 +187,6 @@ spec:
 
 # At least one of the default password variables must be set; note that this ignores SEQ_PASSWORD, but
 # that variable is just a convenience alias for SEQ_FIRSTRUN_ADMINPASSWORD anyway.
-{{- if not (or .Values.firstRunNoAuthentication .Values.firstRunAdminPassword .Values.firstRunAdminPasswordHash) }}
-{{- fail "One of firstRunAdminPassword or firstRunAdminPasswordHash must be specified." }}
+{{- if not (or .Values.firstRunNoAuthentication .Values.firstRunAdminPassword .Values.firstRunAdminPasswordHash .Values.firstRunAdminPasswordSecret) }}
+{{- fail "One of firstRunAdminPassword or firstRunAdminPasswordHash or firstRunAdminPasswordSecret must be specified." }}
 {{- end }}
