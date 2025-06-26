@@ -41,7 +41,7 @@ spec:
 {{- end }}
 {{- if or .Values.firstRunAdminPassword .Values.firstRunAdminPasswordSecret.name }}
             - name: "SEQ_FIRSTRUN_ADMINPASSWORD"
-{{- if or .Values.firstRunAdminPassword
+{{- if .Values.firstRunAdminPassword }}
               value: "{{ .Values.firstRunAdminPassword }}"
 {{- else }}
               valueFrom:
