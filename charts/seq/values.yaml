@@ -20,6 +20,9 @@ acceptEULA: "Y"
 # deployment). See the `firstRunAdminPasswordHash` variant below for better confidentiality.
 firstRunNoAuthentication: false
 # firstRunAdminPassword: ""
+# firstRunAdminPasswordSecret:
+#   name: "seq-admin-password-secret"
+#   key: "password"
 
 # Further customization of the default security settings.
 # See here for docs on how to create a password hash: https://blog.datalust.co/setting-an-initial-password-when-deploying-seq-to-docker/
