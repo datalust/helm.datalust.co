@@ -46,7 +46,7 @@ spec:
 {{- else }}
               valueFrom:
                 secretKeyRef:
-                  name: {{ required "A valud .Values.firstRunAdminPasswordSecret.name is required" .Values.firstRunAdminPasswordSecret.name | quote }}
+                  name: {{ required "A value .Values.firstRunAdminPasswordSecret.name is required" .Values.firstRunAdminPasswordSecret.name | quote }}
                   key: {{ required "A valud .Values.firstRunAdminPasswordSecret.key is required" .Values.firstRunAdminPasswordSecret.key | quote }}
 {{- end }}
 {{- end }}
