@@ -60,6 +60,7 @@ ui:
   containerPort: 80
   service:
     port: 80
+    nodePort: ""
   ingress:
     enabled: false
     path: /
@@ -71,6 +72,7 @@ ingestion:
   containerPort: 5341
   service:
     port: 5341
+    nodePort: ""
   ingress:
     enabled: false
     path: /
@@ -91,6 +93,7 @@ gelf:
     port: 12201
     # GELF can be ingested through either TCP or UDP
     protocol: TCP
+    nodePort: ""
 
 # Accept events in the Syslog format and forward them to Seq.
 syslog:
@@ -107,6 +110,7 @@ syslog:
     port: 514
     # Only UDP is currently supported for ingesting Syslog
     protocol: UDP
+    nodePort: ""
 
 service:
   type: ClusterIP
