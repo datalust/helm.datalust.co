@@ -1,7 +1,7 @@
 # Datalust Helm charts
 
 [Helm is a package manager for Kubernetes](https://helm.sh/). This repository contains the officially supported Helm chart
-for [Seq](https://datalust.co/seq), a search and analysis server for structured application logs.
+for [Seq](https://datalust.co/seq), a search and analysis server for logs, traces, and metrics.
 
 **For details of how to get started with Seq in Kubernetes, check out [the documentation](https://docs.datalust.co/docs/using-helm).**
 
