@@ -1,2 +1,27 @@
 Seq can be accessed via port {{ .Values.ui.service.port }} (or the limited ingestion port {{ .Values.ingestion.service.port }}) on the following DNS name from within your cluster:
 {{ template "seq.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
+
+{{- if eq .Values.service.type "NodePort" }}
+---
+NodePort configuration:
+- UI: {{ if .Values.ui.service.nodePort }}{{ .Values.ui.service.nodePort }}
+{{- else }}assigned automatically
+  kubectl get svc {{ include "seq.fullname" . }} -n {{ .Release.Namespace }} -o jsonpath="{.spec.ports[?(@.name=='ui')].nodePort}"
+{{- end }}
+- Ingestion: {{ if .Values.ingestion.service.nodePort }}{{ .Values.ingestion.service.nodePort }}
+{{- else }}assigned automatically
+  kubectl get svc {{ include "seq.fullname" . }} -n {{ .Release.Namespace }} -o jsonpath="{.spec.ports[?(@.name=='ingestion')].nodePort}"
+{{- end }}
+{{- if .Values.gelf.enabled }}
+- GELF: {{ if .Values.gelf.service.nodePort }}{{ .Values.gelf.service.nodePort }}
+{{- else }}assigned automatically
+  kubectl get svc {{ include "seq.fullname" . }} -n {{ .Release.Namespace }} -o jsonpath="{.spec.ports[?(@.name=='gelf')].nodePort}"
+{{- end }}
+{{- end }}
+{{- if .Values.syslog.enabled }}
+- Syslog: {{ if .Values.syslog.service.nodePort }}{{ .Values.syslog.service.nodePort }}
+{{- else }}assigned automatically
+  kubectl get svc {{ include "seq.fullname" . }} -n {{ .Release.Namespace }} -o jsonpath="{.spec.ports[?(@.name=='syslog')].nodePort}"
+{{- end }}
+{{- end }}
+{{- end }}

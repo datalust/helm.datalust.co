@@ -32,28 +32,6 @@ Create chart name and version as used by the chart label.
 {{- end -}}
 
 {{/*
-Return the appropriate apiVersion for deployment.
-*/}}
-{{- define "deployment.apiVersion" -}}
-{{- if semverCompare ">=1.9-0" .Capabilities.KubeVersion.GitVersion -}}
-{{- print "apps/v1" -}}
-{{- else -}}
-{{- print "extensions/v1beta1" -}}
-{{- end -}}
-{{- end -}}
-
-{{/*
-Return the appropriate apiVersion for ingress.
-*/}}
-{{- define "ingress.apiVersion" -}}
-{{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
-{{- print "networking.k8s.io/v1beta1" -}}
-{{- else -}}
-{{- print "extensions/v1beta1" -}}
-{{- end -}}
-{{- end -}}
-
-{{/*
 Create the name of the service account to use - only used when podsecuritypolicy is also enabled
 */}}
 {{- define "seq.serviceAccountName" -}}
@@ -65,23 +43,9 @@ Create the name of the service account to use - only used when podsecuritypolicy
 {{- end -}}
 
 {{/*
-Return the appropriate apiGroup for PodSecurityPolicy.
+Selector labels
 */}}
-{{- define "podSecurityPolicy.apiGroup" -}}
-{{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
-{{- print "policy" -}}
-{{- else -}}
-{{- print "extensions" -}}
-{{- end -}}
-{{- end -}}
-
-{{/*
-Return the appropriate apiVersion for podSecurityPolicy.
-*/}}
-{{- define "podSecurityPolicy.apiVersion" -}}
-{{- if semverCompare ">=1.10-0" .Capabilities.KubeVersion.GitVersion -}}
-{{- print "policy/v1beta1" -}}
-{{- else -}}
-{{- print "extensions/v1beta1" -}}
-{{- end -}}
+{{- define "seq.selectorLabels" -}}
+app: {{ template "seq.name" . }}
+release: {{ .Release.Name }}
 {{- end -}}

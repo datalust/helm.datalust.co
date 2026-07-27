@@ -1,9 +1,9 @@
 {{- if or .Values.ui.ingress.enabled .Values.ingestion.ingress.enabled }}
-{{- $serviceName := include "seq.fullname" . -}}
-apiVersion: {{ template "ingress.apiVersion" . }}
+{{- $name := include "seq.fullname" . -}}
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ $serviceName }}
+  name: {{ $name }}
   labels:
     app: {{ template "seq.name" . }}
     chart: {{ template "seq.chart" . }}
@@ -19,39 +19,48 @@ metadata:
 spec:
 {{- if .Values.ingress.tls }}
   tls:
-  {{- range .Values.ingress.tls }}
+{{- range .Values.ingress.tls }}
     - hosts:
-      {{- range .hosts }}
+{{- range .hosts }}
         - {{ . | quote }}
-      {{- end }}
-      secretName: {{ .secretName }}
-  {{- end }}
 {{- end }}
+      secretName: {{ .secretName }}
+{{- end }}
+{{- end }}
+  {{- if .Values.ingress.className }}
+  ingressClassName: {{ .Values.ingress.className | quote }}
+  {{- end }}
   rules:
-  {{ if .Values.ui.ingress.enabled }}
-  {{- $uiPath := .Values.ui.ingress.path -}}
-  {{- $uiPort := .Values.ui.service.port -}}
-  {{- range .Values.ui.ingress.hosts }}
+{{- if .Values.ui.ingress.enabled }}
+{{- $uiPath := .Values.ui.ingress.path -}}
+{{- $uiPort := .Values.ui.service.port -}}
+{{- range .Values.ui.ingress.hosts }}
     - host: {{ . }}
       http:
         paths:
           - path: {{ $uiPath }}
+            pathType: Prefix
             backend:
-              serviceName: {{ $serviceName }}
-              servicePort: {{ $uiPort }}
-  {{- end }}
-  {{- end }}
-  {{ if .Values.ingestion.ingress.enabled }}
-  {{- $ingestionPath := .Values.ingestion.ingress.path -}}
-  {{- $ingestionPort := .Values.ingestion.service.port -}}
-  {{- range .Values.ingestion.ingress.hosts }}
+              service:
+                name: {{ $name }}
+                port:
+                  number: {{ $uiPort }}
+{{- end }}
+{{- end }}
+{{- if .Values.ingestion.ingress.enabled }}
+{{- $ingestionPath := .Values.ingestion.ingress.path -}}
+{{- $ingestionPort := .Values.ingestion.service.port -}}
+{{- range .Values.ingestion.ingress.hosts }}
     - host: {{ . }}
       http:
         paths:
           - path: {{ $ingestionPath }}
+            pathType: Prefix
             backend:
-              serviceName: {{ $serviceName }}
-              servicePort: {{ $ingestionPort }}
-  {{- end }}
-  {{- end }}
+              service:
+                name: {{ $name }}
+                port:
+                  number: {{ $ingestionPort }}
+{{- end }}
+{{- end }}
 {{- end }}

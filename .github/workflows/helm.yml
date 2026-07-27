@@ -1,0 +1,35 @@
+name: helm
+
+on:
+  [push, pull_request]
+
+jobs:
+  lint-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v4.3.1
+        with:
+          version: v3.4.0
+
+      - uses: actions/setup-python@v6.0.0
+        with:
+          python-version: '3.x'
+          check-latest: true
+
+      - name: Set up chart-testing
+        uses: helm/chart-testing-action@v2.8.0
+
+      - name: Lint
+        run: "ct lint --charts charts/seq --helm-lint-extra-args '--set firstRunNoAuthentication=true'"
+
+      - name: Create Cluster
+        uses: helm/kind-action@v1.13.0
+
+      - name: Install
+        run: "ct install --charts charts/seq --helm-extra-set-args '--set firstRunAdminPassword=YourP@55word'"

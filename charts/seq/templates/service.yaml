@@ -14,21 +14,33 @@ spec:
       targetPort: ui
       protocol: TCP
       name: ui
+      {{- if and (eq .Values.service.type "NodePort") (.Values.ui.service.nodePort) }}
+      nodePort: {{ .Values.ui.service.nodePort }}
+      {{- end }}
     - port: {{ .Values.ingestion.service.port }}
       targetPort: ingestion
       protocol: TCP
       name: ingestion
+      {{- if and (eq .Values.service.type "NodePort") (.Values.ingestion.service.nodePort) }}
+      nodePort: {{ .Values.ingestion.service.nodePort }}
+      {{- end }}
 {{- if .Values.gelf.enabled }}
     - port: {{ .Values.gelf.service.port }}
       targetPort: gelf
       protocol: {{ .Values.gelf.service.protocol }}
       name: gelf
+      {{- if and (eq .Values.service.type "NodePort") (.Values.gelf.service.nodePort) }}
+      nodePort: {{ .Values.gelf.service.nodePort }}
+      {{- end }}
 {{- end }}
 {{- if .Values.syslog.enabled }}
     - port: {{ .Values.syslog.service.port }}
       targetPort: syslog
       protocol: {{ .Values.syslog.service.protocol }}
       name: syslog
+      {{- if and (eq .Values.service.type "NodePort") (.Values.syslog.service.nodePort) }}
+      nodePort: {{ .Values.syslog.service.nodePort }}
+      {{- end }}
 {{- end }}
   selector:
     app: {{ template "seq.name" . }}

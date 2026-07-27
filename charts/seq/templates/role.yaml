@@ -1,4 +1,4 @@
-{{- if and .Values.rbac.create .Values.podSecurityPolicy.create -}}
+{{- if .Values.rbac.create }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
@@ -8,9 +8,8 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
   name: {{ template "seq.fullname" . }}
-rules:
-  - apiGroups: ['{{ template "podSecurityPolicy.apiGroup" . }}']
-    resources: ['podsecuritypolicies']
-    verbs: ['use']
-    resourceNames: [{{ template "seq.fullname" . }}]
-{{- end -}}
+{{- with .Values.rbac.rules }}
+  rules:
+{{ toYaml . | indent 4 }}
+{{- end }}
+{{- end }}

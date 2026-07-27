@@ -4,13 +4,38 @@
 
 image:
   repository: datalust/seq
-  pullPolicy: IfNotPresent
+  # Specify a tag to pull a specific version of the Seq container
+  # By default the version of the chart will be used as the tag
+  # tag: latest
+  pullPolicy: Always
 
 # By passing the value Y in the ACCEPT_EULA environment variable,
 # you are expressing that you have read and accepted the terms in
 # Seq End User License Agreement applicable to the Seq Docker image
 # that you intend to use.
 acceptEULA: "Y"
+
+# Seq requires a default admin password in order to initialize a fresh container. Either
+# specify this here, or opt out using `firstRunNoAuthentication: true` (not suitable for production
+# deployment). See the `firstRunAdminPasswordHash` variant below for better confidentiality.
+firstRunNoAuthentication: false
+# firstRunAdminPassword: ""
+#
+# Alternatively, a default admin password can be provided from Kubernetes secret:
+# firstRunAdminPasswordSecret:
+#   name: "seq-admin-password-secret"
+#   key: "password"
+
+# Further customization of the default security settings.
+# See here for docs on how to create a password hash: https://blog.datalust.co/setting-an-initial-password-when-deploying-seq-to-docker/
+# firstRunAdminUsername: "admin"
+# firstRunAdminPasswordHash: ""
+# firstRunRequireAuthenticationForHttpIngestion: true
+#
+# Alternatively, a password hash can be provided from Kubernetes secret:
+# firstRunAdminPasswordHashSecret:
+#   name: "seq-admin-password-hash-secret"
+#   key: "password"
 
 # Set this URL if you enable ingress and/or AAD authentication.
 # Without this URL set to include HTTPS, Seq will try to set a login redirect
@@ -19,11 +44,23 @@ acceptEULA: "Y"
 #   AADSTS50011: The reply url specified in the request does not match the reply urls configured for the application
 # baseURI: https://my.public.url/
 
+# Set the addresses that the server will listen on. The first entry listed
+# will be used as the default when generating URIs for apps and notifications.
+# listenURI: "http://localhost:80,http://localhost:5341"
+
+securityContext:
+  runAsUser: 0
+  capabilities:
+    add:
+      - NET_BIND_SERVICE
+
 # The complete Seq API and UI.
 # This API can accept events and serve API requests.
 ui:
+  containerPort: 80
   service:
     port: 80
+    nodePort: ""
   ingress:
     enabled: false
     path: /
@@ -32,8 +69,10 @@ ui:
 # The ingestion-only API.
 # This API is a subset of ui that can only ingest events.
 ingestion:
+  containerPort: 5341
   service:
     port: 5341
+    nodePort: ""
   ingress:
     enabled: false
     path: /
@@ -45,10 +84,16 @@ gelf:
   image:
     repository: datalust/seq-input-gelf
     pullPolicy: IfNotPresent
+  securityContext:
+    runAsUser: 0
+    capabilities:
+      add:
+        - NET_BIND_SERVICE
   service:
     port: 12201
     # GELF can be ingested through either TCP or UDP
     protocol: TCP
+    nodePort: ""
 
 # Accept events in the Syslog format and forward them to Seq.
 syslog:
@@ -56,17 +101,23 @@ syslog:
   image:
     repository: datalust/seq-input-syslog
     pullPolicy: IfNotPresent
+  securityContext:
+    runAsUser: 0
+    capabilities:
+      add:
+        - NET_BIND_SERVICE
   service:
     port: 514
     # Only UDP is currently supported for ingesting Syslog
     protocol: UDP
+    nodePort: ""
 
 service:
   type: ClusterIP
 
 ingress:
+  # className: nginx
   annotations: {}
-    # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   labels: {}
   tls: []
@@ -74,24 +125,40 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
+## Network Policy configuration
+## ref: https://kubernetes.io/docs/concepts/services-networking/network-policies/
+networkPolicy:
+  enabled: false
+  ingress:
+  - {}
+  egress:
+  - {}
+  # Example which allows DNS resolution:
+  # egress:
+  #     # Allow dns resolution
+  # - ports:
+  #   - port: 53
+  #     protocol: UDP
+  #   - port: 53
+  #     protocol: TCP
+
 resources: {}
   # We recommend uncommenting these and specifying an explicit memory limit that
   # suits your workload.
   # limits:
   #  memory: 2Gi
 
-cache:
-  # The fraction of RAM that the cache should try fit within. Specifying a larger
-  # value may allow more events in RAM at the expense of potential instability.
-  # Setting it to `0` will disable the cache completely.
-  # 70% (`0.7`) is a good starting point for machines with up to ~8GB of RAM.
-  targetSize: 0.7
-
 nodeSelector: {}
 
 tolerations: []
 
 affinity: {}
+
+imagePullSecrets: []
+
+## Priority class name
+## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/
+priorityClassName: ""
 
 ## Enable persistence using Persistent Volume Claims
 ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
@@ -127,14 +194,7 @@ serviceAccount:
 ## Enable RBAC
 rbac:
   create: false
-
-# If true, create & use Pod Security Policy resources
-# https://kubernetes.io/docs/concepts/policy/pod-security-policy/
-podSecurityPolicy:
-  create: false
-
-securityContext:
-  privileged: true
+  rules: []
 
 ## Configure probe values
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
@@ -158,3 +218,20 @@ startupProbe:
   enabled: true
   failureThreshold: 30
   periodSeconds: 10
+
+# Additional volumes to mount on the Seq container
+# These can be used to mount init scripts and certificates
+extraVolumes: []
+# - name: seq-setup-volume
+#   configMap:
+#     name: seq-setup-map
+extraVolumeMounts: []
+# - name: seq-setup-volume
+#   mountPath: /extra-stuff
+
+# Additional environment variables to set on the Seq container
+# These can be used to set Seq configuration values that aren't
+# exposed directly through the chart
+extraEnvs: []
+# - name: MY_ENV_VAR
+#   value: "Some Value"
