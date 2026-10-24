@@ -95,6 +95,11 @@ gelf:
     protocol: TCP
     nodePort: ""
 
+  apiKey: ""
+  existingApiKey:
+    name: ""
+    key: ""
+
 # Accept events in the Syslog format and forward them to Seq.
 syslog:
   enabled: false
@@ -111,6 +116,11 @@ syslog:
     # Only UDP is currently supported for ingesting Syslog
     protocol: UDP
     nodePort: ""
+
+  apiKey: ""
+  existingApiKey:
+    name: ""
+    key: ""
 
 service:
   type: ClusterIP

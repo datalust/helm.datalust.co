@@ -128,7 +128,10 @@ spec:
             - name: "SEQ_ADDRESS"
               value: "http://localhost:{{ .Values.ingestion.service.port }}"
             - name: "SEQ_API_KEY"
-              value: "{{ .Values.gelf.apiKey }}"
+              valueFrom:
+                secretKeyRef:
+                  name: "{{ default (printf "%s-apiKeys" (include "seq.fullname" .)) .Values.gelf.existingApiKey.name }}"
+                  key: "{{ default "gelf-key" .Values.gelf.existingApiKey.key }}"
             - name: "GELF_ADDRESS"
               value: "{{ .Values.gelf.service.protocol | lower }}://0.0.0.0:12201"
             - name: "GELF_ENABLE_DIAGNOSTICS"
@@ -148,7 +151,10 @@ spec:
             - name: "SEQ_ADDRESS"
               value: "http://localhost:{{ .Values.ingestion.service.port }}"
             - name: "SEQ_API_KEY"
-              value: "{{ .Values.syslog.apiKey }}"
+              valueFrom:
+                secretKeyRef:
+                  name: "{{- default (printf "%s-apiKeys" (include "seq.fullname" .)) .Values.syslog.existingApiKey.name }}"
+                  key: "{{- default "syslog-key" .Values.syslog.existingApiKey.key }}"
             - name: "SYSLOG_ADDRESS"
               value: "{{ .Values.syslog.service.protocol | lower }}://0.0.0.0:514"
             - name: "SYSLOG_ENABLE_DIAGNOSTICS"
