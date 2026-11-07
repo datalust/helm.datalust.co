@@ -98,7 +98,7 @@ gelf:
   apiKey: ""
   existingApiKey:
     name: ""
-    key: ""
+    key: "gelf-key"
 
 # Accept events in the Syslog format and forward them to Seq.
 syslog:
@@ -120,7 +120,7 @@ syslog:
   apiKey: ""
   existingApiKey:
     name: ""
-    key: ""
+    key: "syslog-key"
 
 service:
   type: ClusterIP

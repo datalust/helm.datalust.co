@@ -130,7 +130,7 @@ spec:
             - name: "SEQ_API_KEY"
               valueFrom:
                 secretKeyRef:
-                  name: "{{ default (printf "%s-apiKeys" (include "seq.fullname" .)) .Values.gelf.existingApiKey.name }}"
+                  name: "{{ default (printf "%s-apikeys" (include "seq.fullname" .)) .Values.gelf.existingApiKey.name }}"
                   key: "{{ default "gelf-key" .Values.gelf.existingApiKey.key }}"
             - name: "GELF_ADDRESS"
               value: "{{ .Values.gelf.service.protocol | lower }}://0.0.0.0:12201"
@@ -153,7 +153,7 @@ spec:
             - name: "SEQ_API_KEY"
               valueFrom:
                 secretKeyRef:
-                  name: "{{- default (printf "%s-apiKeys" (include "seq.fullname" .)) .Values.syslog.existingApiKey.name }}"
+                  name: "{{- default (printf "%s-apikeys" (include "seq.fullname" .)) .Values.syslog.existingApiKey.name }}"
                   key: "{{- default "syslog-key" .Values.syslog.existingApiKey.key }}"
             - name: "SYSLOG_ADDRESS"
               value: "{{ .Values.syslog.service.protocol | lower }}://0.0.0.0:514"
